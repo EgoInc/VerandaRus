@@ -1,0 +1,125 @@
+#############################################
+# GLOBAL IGNORE
+#############################################
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+
+#############################################
+# ENV VARIABLES
+#############################################
+.env
+.env.local
+.env.*.local
+*.env
+
+
+#############################################
+# PYTHON (BACKEND)
+#############################################
+
+# виртуальное окружение
+venv/
+env/
+.venv/
+
+# кеши
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# compiled
+*.so
+
+# Django
+**/migrations/__pycache__/
+**/migrations/*.pyc
+
+# Игнорировать сгенерированные миграции?
+# ❗ ВАЖНО: миграции нужно коммитить
+# **/migrations/ — НЕ ИГНОРИРУЕМ
+
+# SQLite (если вдруг останется)
+*.sqlite3
+
+# Атрибуты Django
+staticfiles/
+media/
+media/**/*
+
+
+#############################################
+# NODE / NEXT.JS (FRONTEND)
+#############################################
+
+# node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+.turbo/
+.vercel/
+
+# OS junk
+.DS_Store
+
+# Env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Next.js cache
+.next/cache/
+
+
+#############################################
+# EDITORS & IDE
+#############################################
+
+# VSCode
+.vscode/
+.vscode/*
+
+# JetBrains / PyCharm
+.idea/
+*.iml
+
+# Cursor
+.cursor/
+
+
+#############################################
+# DOCKER
+#############################################
+
+# docker
+docker-compose.override.yml
+docker-compose.prod.yml
+*.pid
+*.seed
+
+
+#############################################
+# OTHER
+#############################################
+
+# Compiled assets
+*.zip
+*.tar.gz
+
+# Local backups
+backup/
+temp/
+tmp/
