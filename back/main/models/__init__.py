@@ -3,6 +3,8 @@ from .houses import Accommodation, Amenity, AccommodationAmenity, AccommodationI
 from .pricing import PriceRule
 from .bookings import Booking
 
+from .telegram import TelegramChat
+
 __all__ = [
     "User",
     "BlacklistedPhone",
@@ -12,4 +14,5 @@ __all__ = [
     "AccommodationImage",
     "PriceRule",
     "Booking",
+    "TelegramChat",
 ]
