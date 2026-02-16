@@ -1,3 +1,4 @@
+requests
 Django>=5.0,<6.0
 djangorestframework>=3.15
 drf-spectacular>=0.27

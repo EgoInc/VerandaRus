@@ -1,10 +1,11 @@
 from pathlib import Path
 import os
-
+TG_BOT_TOKEN = os.environ.get('TG_BOT_TOKEN', '')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-key")
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
+ADMIN_CHAT_ID = os.environ.get('ADMIN_CHAT_ID', None)
 
 allowed_hosts_env = os.getenv("DJANGO_ALLOWED_HOSTS", "")
 if allowed_hosts_env.strip() in ("*", ""):
@@ -22,7 +23,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
-    "main",
+    "main.apps.MainConfig",
 ]
 
 MIDDLEWARE = [

@@ -14,6 +14,21 @@ from .serializers import (
     AuthorizationResponseSerializer,
 )
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from main.models.users import BlacklistedPhone
+from .serializers import BlacklistedPhoneSerializer
+from ..permissions import IsAdminUser
+
+class BlacklistViewSet(viewsets.ModelViewSet):
+    """
+    CRUD для чёрного списка телефонов.
+    Доступно только администраторам (is_staff=True).
+    """
+    queryset = BlacklistedPhone.objects.all()
+    serializer_class = BlacklistedPhoneSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
 
 class MyBookingsView(APIView):
     """Return bookings for current user (TODO implementation)."""

@@ -15,7 +15,7 @@ services:
   backend:
     build: .
     env_file:
-      - .env
+      - token.env
     depends_on:
       - db
     volumes:
