@@ -1,31 +1,45 @@
 from django.contrib.auth import get_user_model
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from main.models import Booking
+from main.views.bookings_module.serializers import BookingListSerializer
+
 from .serializers import (
-    BlacklistedPhoneSerializer,
-    MyBookingSerializer,
-    DevLoginSerializer,
-    DevLoginResponseSerializer,
-    AuthorizationSerializer,
     AuthorizationResponseSerializer,
+    AuthorizationSerializer,
+    BlacklistedPhoneSerializer,
+    DevLoginResponseSerializer,
+    DevLoginSerializer,
+    MyBookingSerializer,
 )
 
 
 class MyBookingsView(APIView):
-    """Return bookings for current user (TODO implementation)."""
+    """GET /api/me/bookings/ — list bookings for the authenticated user."""
 
-    serializer_class = MyBookingSerializer
+    permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        summary="Брони пользователя",
+        description="Возвращает все брони текущего пользователя",
+        responses={200: BookingListSerializer(many=True)},
+        tags=["bookings"],
+        operation_id="me_bookings_list",
+    )
     def get(self, request):
-        # TODO: return bookings for current user
-        return Response(
-            {"detail": "TODO: implement my bookings list"},
-            status=status.HTTP_501_NOT_IMPLEMENTED,
+        bookings = (
+            Booking.objects.filter(user=request.user)
+            .select_related("accommodation")
+            .order_by("-created_at")
         )
+        serializer = BookingListSerializer(bookings, many=True)
+        return Response(serializer.data)
 
 
 class BlacklistCreateView(APIView):
@@ -56,7 +70,9 @@ class DevLoginView(APIView):
 
         # Create or fetch user by username.
         User = get_user_model()
-        user, _created = User.objects.get_or_create(username=login, defaults={"email": ""})
+        user, _created = User.objects.get_or_create(
+            username=login, defaults={"email": ""}
+        )
 
         # Create or fetch DRF token.
         token, _created = Token.objects.get_or_create(user=user)
